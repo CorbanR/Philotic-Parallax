@@ -1,0 +1,44 @@
+---
+- name: Run django app command
+  command: chdir={{ app_location }}
+           django-admin.py startproject helloworld
+           creates={{ app_location }}/helloworld/helloworld/settings.py 
+
+- name: set permissions on app folder
+  file: path={{ app_location }}/helloworld/
+        mode=644
+        owner=deploy
+        group=deploy
+        recurse=yes  
+ 
+- name: Replace settings.py
+  template: src=settings.j2
+            dest={{ app_location }}/helloworld/helloworld/settings.py
+            mode=644
+            owner=deploy
+            group=deploy
+            backup=yes
+
+- name: Replace urls.py
+  template: src=urls.j2
+            dest={{ app_location }}/helloworld/helloworld/urls.py
+            mode=644
+            owner=deploy
+            group=deploy
+            backup=yes
+
+- name: Create views.py
+  template: src=views.j2
+            dest={{ app_location }}/helloworld/helloworld/views.py
+            mode=644
+            owner=deploy
+            group=deploy
+
+- name: Create passenger_wsgi
+  template: src=passenger_wsgi.j2
+            dest={{ helloworld }}/passenger_wsgi.py
+            mode=644
+            owner=deploy
+            group=deploy
+
+  notify: Restart Nginx App

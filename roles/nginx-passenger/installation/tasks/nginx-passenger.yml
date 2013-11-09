@@ -1,0 +1,28 @@
+---
+- name: Install Passenger-{{ passenger_version }}
+  command:  gem install passenger -v {{ passenger_version }}
+            creates={{ passenger_location }}passenger-install-nginx-module
+
+- name: Download the Nginx-{{nginx_version }} source code
+  get_url: url=http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz
+           dest=/usr/local/src/
+           sha256sum={{ nginx_checksum }}
+
+- name: Generate the Nginx install script on the server
+  template: src=install-nginx.j2
+            dest=/usr/local/src/install-nginx.sh
+            mode=700
+
+- name: Run the Nginx install script
+  command: /usr/local/src/install-nginx.sh
+           creates={{ passenger_location }}nginx-{{ nginx_version }}
+- name: Create the web and app_location directories
+  file: path={{ item }}
+        owner=deploy
+        group=deploy
+        state=directory
+  with_items:
+   - "{{ helloworld }}/public"
+   - "{{ helloworld }}/shared"
+   - "{{ helloworld }}/shared/log"
+   - "{{ app_location }}"

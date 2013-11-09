@@ -1,0 +1,19 @@
+---
+- hosts: nginx-django
+  user: deploy
+  sudo: yes
+
+  roles:
+    - common
+    - deploy-user
+    - ssh
+    - nginx-passenger/installation
+    - nginx-passenger/configuration
+    - nginx-passenger/vhost
+    - django
+    - app-helloworld
+  vars_files:
+    - vars/defaults
+
+  vars_prompt:
+    upgrade_system: "would you like to run a full system upgrade? (No:yes)"

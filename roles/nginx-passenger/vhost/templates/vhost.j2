@@ -1,0 +1,14 @@
+server {
+  listen 80 default_server;
+  server_name helloworld.local;
+  rewrite  "/*" /hello/;
+  
+  root {{ helloworld }}/public;
+
+  access_log {{ helloworld }}/shared/log/nginx-access.log;
+  error_log  {{ helloworld }}/shared/log/nginx-error.log;
+
+  passenger_enabled on;
+  passenger_user    www-data;
+  passenger_group   www-data;
+}

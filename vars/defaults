@@ -1,0 +1,23 @@
+---
+#Django Version & checksum (Change for new versions)
+django_version: "1.6"
+django_checksum: "d3d9fdc8f313e5a33a6dc7ebdeca19147c11029822b462064c56895d7969ab98"
+
+#Passenger Version, (Change for new versions)
+passenger_version: "4.0.23"
+passenger_location: "/var/lib/gems/1.9.1/gems/passenger-{{ passenger_version }}/bin/"
+
+#Nginx Version & checksum (Change for new versions)
+nginx_version: "1.4.3"
+nginx_checksum: "ae123885c923a6c3f5bab0a8b7296ef21c4fdf6087834667ebbc16338177de84"
+
+#Passenger config variables (change as needed) 
+passenger_max_pool_size: "4"
+passenger_max_requests:  "2000"
+
+#Ruby Version
+ruby_version: "1.9.3"
+
+#Application Variables
+helloworld: "/var/www/helloworld"
+app_location: "/home/deploy/app"

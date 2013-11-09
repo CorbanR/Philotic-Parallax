@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /usr/local/src/
+tar xvfz Django-{{ django_version }}.tar.gz
+cd Django-{{ django_version }}
+python setup.py install
+python3 setup.py install 

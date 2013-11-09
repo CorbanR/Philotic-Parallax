@@ -1,0 +1,14 @@
+---
+- name: Download Django {{ django_version }} (Latest Stable)
+  get_url: url=https://www.djangoproject.com/download/{{ django_version }}/tarball/
+           dest=/usr/local/src/Django-{{ django_version }}.tar.gz
+           sha256sum={{ django_checksum }}
+
+- name: Generate the Django install script on the server
+  template: src=install-django.j2
+            dest=/usr/local/src/install-django.sh
+            mode=700
+
+- name: Run the Django install script (Installing Django for python 2.7 and 3)
+  command: /usr/local/src/install-django.sh
+           creates=/usr/local/bin/django-admin.py

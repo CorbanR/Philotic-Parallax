@@ -1,0 +1,3 @@
+#Ignore Vagrant temp directory
+.vagrant
+.vagrant/

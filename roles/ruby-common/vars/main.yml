@@ -1,0 +1,11 @@
+---
+ruby_symlinks:
+  - bundle
+  - erb
+  - gem
+  - irb
+  - rake
+  - rdoc
+  - ri
+  - ruby
+  - testrb

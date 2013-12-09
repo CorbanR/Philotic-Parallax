@@ -6,10 +6,9 @@
 
 - name: set permissions on app folder
   file: path={{ app_location }}/helloworld/
-        mode=644
+        mode=755
         owner=deploy
-        group=deploy
-        recurse=yes  
+        group=deploy  
  
 - name: Replace settings.py
   template: src=settings.j2

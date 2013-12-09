@@ -1,4 +1,2 @@
 ---
-
-- include: ruby.yml
 - include: nginx-passenger.yml

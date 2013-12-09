@@ -21,7 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "vagrant.yml"
     ansible.inventory_path = "inventories/vagrant"
-    ansible.verbose = "v"
    end
   end
 end

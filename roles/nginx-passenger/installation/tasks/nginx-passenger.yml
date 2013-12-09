@@ -1,21 +1,47 @@
 ---
-- name: Install Passenger-{{ passenger_version }}
-  command:  gem install passenger -v {{ passenger_version }}
-            creates={{ passenger_location }}passenger-install-nginx-module
+- name: Install the libcurl GnuTLS development files that Passenger requires
+  apt: pkg=libcurl4-gnutls-dev
+       state=present
+
+- name: Install Passenger
+  command: "{{ ruby_location }}/bin/gem install passenger -v {{ passenger_version }}
+            creates={{ ruby_location }}/lib/ruby/gems/{{ ruby_library_version }}/gems/passenger-{{ passenger_version }}/README.md"
+
+- name: Make Passenger symlinks
+  file: path=/usr/local/bin/{{ item }}
+        src={{ ruby_location }}/bin/{{ item }}
+        state=link
+  with_items:
+    - passenger-memory-stats
+    - passenger-status
 
 - name: Download the Nginx-{{nginx_version }} source code
   get_url: url=http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz
            dest=/usr/local/src/
            sha256sum={{ nginx_checksum }}
 
+- name: Add Swap space for nginx compilation
+  shell: dd if=/dev/zero of=/swap bs=1M count=1024 &&
+         mkswap /swap &&
+         swapon /swap
+         creates=/swap
+  when: swap_on=="yes"
+
 - name: Generate the Nginx install script on the server
   template: src=install-nginx.j2
             dest=/usr/local/src/install-nginx.sh
             mode=700
 
-- name: Run the Nginx install script
+- name: Run the Nginx installation script
   command: /usr/local/src/install-nginx.sh
-           creates={{ passenger_location }}nginx-{{ nginx_version }}
+           creates={{ nginx_location }}/sbin/nginx
+
+- name: Make nginx symlink
+  file: path=/opt/nginx
+        src={{ nginx_location }}
+        state=link
+        force=yes
+
 - name: Create the web and app_location directories
   file: path={{ item }}
         owner=deploy

@@ -1,7 +1,5 @@
 #!/bin/bash
 
 cd /usr/local/src/
-tar xvfz nginx-"{{ nginx_version }}".tar.gz
-passenger-install-nginx-module --auto --prefix=/opt/nginx --nginx-source-dir=/usr/local/src/nginx-"{{ nginx_version }}" --extra-configure-flags="--with-http_gzip_static_module"
-#Creates a file in the passenger directory. If the file exists Ansible will not recomple Nginx. It it is missing, nginx will be recomplied. This is usefull if you update passenger or nginx. 
-touch "{{ passenger_location }}"nginx-"{{ nginx_version }}"
+tar xvfz nginx-{{ nginx_version }}.tar.gz
+{{ ruby_location }}/bin/passenger-install-nginx-module --auto --prefix="{{ nginx_location }}" --nginx-source-dir="/usr/local/src/nginx-{{ nginx_version }}" --extra-configure-flags="{{ nginx_extra_configure_flags }}"

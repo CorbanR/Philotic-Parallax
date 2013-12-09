@@ -1,5 +1,7 @@
 ansible-playbooks
 =================
+Update! 12-08-2013 
+Refactored playbook, to install passenger via ruby-2.0.0-p353
 
 Sample [Ansible](http://www.ansibleworks.com/) Playbook for [Django](https://www.djangoproject.com) that installs Nginx, Passenger, and Django 1.6.  It also demonstrates how to deploy a sample Django "Hello World" application.
 
@@ -10,7 +12,7 @@ Sample [Ansible](http://www.ansibleworks.com/) Playbook for [Django](https://www
  * Adds an SSH public key to the deploy user's Authorized Keys file
  * Reconfigures OpenSSH to only allow access via SSH keys
  * Installs Django 1.6 for use with Python 2.7 or 3 
- * Installs Ruby 1.9.3 (For installing Passenger Gem)
+ * Installs Ruby ruby-2.0.0-p353 (For installing Passenger Gem)
  * Installs Nginx + Passenger
  * Sets up and enables an Nginx vhost
  * Creates all necessary application directories and files to create a Django Hello World application.
@@ -49,4 +51,4 @@ Future Enhancements
 
 Credit
 ----------------------------------
-* I based part of this playbook off of [mazer-rackham](https://github.com/jlund/mazer-rackham) written by jlund. I would like to personally thank jlund for his work, he has been a good friend and `*nix` mentor
+* I based much of this playbook off of [mazer-rackham](https://github.com/jlund/mazer-rackham) written by jlund. I would like to personally thank jlund for his work, he has been a good friend and `*nix` mentor

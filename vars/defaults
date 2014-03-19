@@ -1,15 +1,15 @@
 ---
 #Django Version & checksum (Change for new versions)
-django_version: "1.6"
-django_checksum: "d3d9fdc8f313e5a33a6dc7ebdeca19147c11029822b462064c56895d7969ab98"
+django_version: "1.6.2"
+django_checksum: "d1b3f8460e936f47846e7c4f80af951eda82a41c253c3a51ff3389863ff1c03a"
 
 #Passenger Version, (Change for new versions)
-passenger_version: "4.0.27"
+passenger_version: "4.0.40"
 passenger_location: "/var/lib/gems/1.9.1/gems/passenger-{{ passenger_version }}/bin/"
 
 #Nginx Version & checksum (Change for new versions)
-nginx_version: "1.4.4"
-nginx_checksum: "7c989a58e5408c9593da0bebcd0e4ffc3d892d1316ba5042ddb0be5b0b4102b9"
+nginx_version: "1.4.7"
+nginx_checksum: "23b8ff4a76817090678f91b0efbfcef59a93492f6612dc8370c44c1f1ce1b626"
 nginx_extra_configure_flags: "--with-http_gzip_static_module"
 nginx_location: "/opt/nginx-{{ nginx_version }}-passenger-{{ passenger_version }}"
 
@@ -18,10 +18,10 @@ passenger_max_pool_size: "4"
 passenger_max_requests:  "2000"
 
 #Ruby Variables 
-ruby_library_version:   "2.0.0"
-ruby_version:           "ruby-2.0.0-p353"
-ruby_checksum:          "3de4e4d9aff4682fa4f8ed2b70bd0d746fae17452fc3d3a8e8f505ead9105ad9"
-ruby_download_location: "http://cache.ruby-lang.org/pub/ruby/2.0/{{ ruby_version }}.tar.bz2"
+ruby_library_version:   "2.1.0"
+ruby_version:           "ruby-2.1.1"
+ruby_checksum:          "c843df31ae88ed49f5393142b02b9a9f5a6557453805fd489a76fbafeae88941"
+ruby_download_location: "http://cache.ruby-lang.org/pub/ruby/2.1/{{ ruby_version }}.tar.gz"
 ruby_location: "/opt/{{ ruby_version }}"
 
 #Application Variables

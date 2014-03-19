@@ -1,3 +1,6 @@
 #Ignore Vagrant temp directory
 .vagrant
 .vagrant/
+
+#Ignore swap
+*.swp

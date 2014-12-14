@@ -1,0 +1,11 @@
+---
+nginx_worker_processes:              "1"
+nginx_worker_connections:            "512"
+nginx_server_names_hash_bucket_size: "64"
+nginx_types_hash_max_size:           "2048"
+nginx_client_max_body_size:          "10M"
+nginx_keepalive_timeout:             "65"
+
+passenger_min_instances: "1"
+passenger_max_pool_size: "6"
+passenger_max_requests:  "2000"

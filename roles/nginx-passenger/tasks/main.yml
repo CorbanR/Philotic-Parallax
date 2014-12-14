@@ -1,0 +1,49 @@
+---
+- name: install repo key for passenger repository
+  apt_key: id=AC40B2F7
+           url="http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x561F9B9CAC40B2F7"
+           state=present
+
+- name: add passenger nginx repository
+  apt_repository: repo="{{ item }}" state=present
+  with_items:
+    - "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main"
+
+- name: install nginx with passenger 
+  apt:  pkg={{ item }}
+        state=present
+        update-cache=yes
+  with_items:
+    - nginx-extras
+    - passenger
+
+- name: Update Nginx configuration
+  template: src=nginx.conf.j2
+            dest=/etc/nginx/nginx.conf
+            owner=root
+            group=root
+            mode=644
+  notify: Restart Nginx
+
+- name: Set up Nginx vhost directories
+  file: path=/etc/nginx/{{ item }}
+        state=directory
+  with_items:
+    - sites-available
+    - sites-enabled
+
+- name: Disable the default vhost
+  file: path=/etc/nginx/sites-enabled/default
+        state=absent
+  notify: Restart Nginx
+
+- name: Generate the helloworld virtual host and restart Nginx if it is updated
+  template: src=vhost.j2
+            dest=/etc/nginx/sites-available/helloworld
+  notify: Restart Nginx
+
+- name: Enable the nginx virtual host
+  file: path=/etc/nginx/sites-enabled/helloworld
+        src=/etc/nginx/sites-available/helloworld
+        state=link
+  notify: Restart Nginx

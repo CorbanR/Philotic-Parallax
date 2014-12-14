@@ -1,0 +1,6 @@
+server {
+  listen 80;
+  server_name helloworld.local;
+  root {{ helloworld }}/public;
+  passenger_enabled on;
+}

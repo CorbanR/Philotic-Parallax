@@ -1,27 +1,26 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-#
-#VirtualBox Specific
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "precise64"
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-  config.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh"
-#VMware Specific
-  config.vm.provider "vmware_fusion" do |v, override|
-  override.vm.box = "precise64_fusion"
-  override.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
-  override.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh"
-  override.vm.network "forwarded_port", guest: 80, host: 8080, id: "http"
-  v.vmx["memsize"] = "1024"
-  v.vmx["numvcpus"] = "2"
-
-#Ansible Specific 
-  config.vm.provision "ansible" do |ansible|
-    ansible.limit = 'all'
-    ansible.playbook = "vagrant.yml"
-    ansible.inventory_path = "inventories/vagrant"
-   end
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.provider :virtualbox do |vb, override|
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
+  end
+    config.vm.provider "vmware_fusion" do |vm, override|
+      override.vm.box = "CorbanRaun/trusty64"
+      vm.vmx["memsize"] = "512"
+      vm.vmx["numvcpus"] = "2"
+  end
+  config.vm.define "philotic" do |philotic|
+    philotic.vm.hostname = "philotic-vagrant"
+    philotic.vm.network "private_network", ip: "192.168.50.2"
+    philotic.vm.network "forwarded_port", guest: 80, host: 8080, id: "http"
+    philotic.vm.provision "ansible" do |ansible|
+      ansible.limit = 'all'
+      ansible.playbook = ".vagrant.yml"
+    end
   end
 end

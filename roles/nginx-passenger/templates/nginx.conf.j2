@@ -1,0 +1,39 @@
+user  www-data;
+worker_processes  {{ nginx_worker_processes }};
+
+events {
+    worker_connections  {{ nginx_worker_connections }};
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    #Disable SSLv3 if ssl on
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;    
+
+    passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;
+    passenger_ruby /usr/local/bin/ruby;
+
+    passenger_min_instances {{ passenger_min_instances }};
+    passenger_max_pool_size {{ passenger_max_pool_size }};
+    passenger_max_requests {{ passenger_max_requests }};
+
+    sendfile       on;
+    tcp_nopush     on;
+    tcp_nodelay    on;
+
+    server_tokens  off;
+    server_names_hash_bucket_size  {{ nginx_server_names_hash_bucket_size }};
+    types_hash_max_size   {{ nginx_types_hash_max_size }};
+    client_max_body_size  {{ nginx_client_max_body_size }};
+
+    keepalive_timeout  {{ nginx_keepalive_timeout }};
+
+    gzip on;
+    gzip_types text/css text/xml text/plain application/x-javascript application/atom+xml application/rss+xml;
+
+    index index.html index.htm;
+
+    include /etc/nginx/sites-enabled/*;
+}

@@ -1,4 +1,15 @@
 ---
+- name: Create the web and app_location directories
+  file: path={{ item }}
+        owner=deploy
+        group=deploy
+        state=directory
+  with_items:
+   - "{{ helloworld }}/public"
+   - "{{ helloworld }}/shared"
+   - "{{ helloworld }}/shared/log"
+   - "{{ app_location }}"
+
 - name: Run django app command
   command: chdir={{ app_location }}
            django-admin.py startproject helloworld

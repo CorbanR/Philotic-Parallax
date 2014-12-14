@@ -1,8 +1,0 @@
----
-
-- hosts: nginx-django
-  gather_facts: no
-  user: vagrant
-  sudo: yes
-  roles:
-    - vagrant

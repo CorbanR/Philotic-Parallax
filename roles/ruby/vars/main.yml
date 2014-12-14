@@ -1,0 +1,22 @@
+---
+gem_executable: "/usr/local/bin/gem"
+
+ruby_deps:
+  - build-essential
+  - zlib1g
+  - zlib1g-dev
+  - libssl-dev
+  - libreadline6
+  - libreadline6-dev
+  - libxml2
+  - libxml2-dev
+  - libxslt1-dev
+
+ruby_links:
+  - testrb
+  - ri
+  - rdoc
+  - rake
+  - irb
+  - gem
+  - ruby

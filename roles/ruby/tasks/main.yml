@@ -1,0 +1,31 @@
+---
+- name: install ruby dependencies required for compiling.
+  apt: pkg={{ item }}
+       cache_valid_time=86400
+       update_cache=yes
+       state=present
+  with_items: ruby_deps
+
+- name: install or update ruby-build
+  git: repo=git://github.com/sstephenson/ruby-build.git
+       dest=/usr/local/ruby-build
+       accept_hostkey=yes
+
+- name: build and install ruby
+  command: /usr/local/ruby-build/bin/ruby-build {{ ruby_version }} /usr/bin/ruby-{{ ruby_version }}
+           creates=/usr/bin/ruby-{{ ruby_version }}
+
+- name: Symlink Ruby {{ ruby_version }}
+  file: src=/usr/bin/ruby-{{ ruby_version }}/bin/{{ item }} 
+        dest=/usr/local/bin/{{ item }}
+        force=yes 
+        state=link     
+  with_items: ruby_links
+
+- name: Install Bundler
+  gem: name={{ item }}
+       executable={{ gem_executable }}
+       user_install=no
+  with_items: 
+    - rake
+    - bundler

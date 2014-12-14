@@ -1,0 +1,12 @@
+---
+- hosts: philotic
+  gather_facts: yes
+  user: vagrant
+  sudo: yes
+  roles:
+    - common
+    - deploy-user
+    - ssh
+    - nginx-passenger
+    - django
+    - app-helloworld

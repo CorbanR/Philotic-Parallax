@@ -1,0 +1,3 @@
+---
+helloworld: "/var/www/helloworld"
+app_location: "/home/deploy/app"
